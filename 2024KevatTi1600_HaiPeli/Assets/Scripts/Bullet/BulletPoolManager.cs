@@ -16,7 +16,20 @@ public class BulletPoolManager : MonoBehaviour
 
     private void InitializePool(){
         for(int i = 0; i < poolSize; i++){
-            Debug.Log("Luodaan ammus " + i);
+          GameObject newBullet = Instantiate(bulletPrefab);
+          newBullet.SetActive(false);
+          bulletPool.Enqueue(newBullet);
         }
+    }
+
+    public GameObject GetBullet(){
+        GameObject bullet = bulletPool.Dequeue();
+        bullet.SetActive(true);
+        return bullet;
+    }
+
+    public void ReturnBullet(GameObject bullet){
+        bullet.SetActive(false);
+        bulletPool.Enqueue(bullet);
     }
 }
