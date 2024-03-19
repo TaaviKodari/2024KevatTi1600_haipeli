@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    public Transform gunTransform;
     public float moveSpeed = 5f;
     
     private Rigidbody2D body;
@@ -46,6 +47,10 @@ public class PlayerController : MonoBehaviour
     {
         if(controls.Player.Fire.triggered){
             Debug.Log("Ampuu");
+            GameObject bullet = BulletPoolManager.Instance.GetBullet();
+            bullet.transform.position = gunTransform.position;
+            bullet.transform.rotation = gunTransform.rotation;
+
         }
     }
 }
