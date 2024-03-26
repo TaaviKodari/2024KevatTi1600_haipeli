@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     private Master controls;
 
     private Vector2 moveInput;
-
+    private Vector2 aimInput;
     private void Awake() {
         controls = new Master();
         body = GetComponent<Rigidbody2D>();
@@ -41,9 +41,19 @@ public class PlayerController : MonoBehaviour
 
     private void Update(){
         Shoot();
+        Aim();
     }
 
-    private void Shoot()
+    void Aim()
+    {
+        aimInput = controls.Player.Aim.ReadValue<Vector2>();
+        if(aimInput.sqrMagnitude > 0.1){
+
+            Debug.Log(aimInput);
+        }
+    }
+
+    void Shoot()
     {
         if(controls.Player.Fire.triggered){
             Debug.Log("Ampuu");
