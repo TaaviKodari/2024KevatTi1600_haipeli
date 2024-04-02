@@ -49,8 +49,26 @@ public class PlayerController : MonoBehaviour
         aimInput = controls.Player.Aim.ReadValue<Vector2>();
         if(aimInput.sqrMagnitude > 0.1){
 
-            Debug.Log(aimInput);
+            Vector2 aimDirection = Vector2.zero;
+            if(UsingMouse()){
+                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+                mousePosition.z = 0;
+                aimDirection = mousePosition - gunTransform.position;
+            }
+            else{
+                aimDirection = aimInput;
+            }
+            float angle = Mathf.Atan2(aimDirection.x, -aimDirection.y) * Mathf.Rad2Deg;
+            gunTransform.rotation = Quaternion.Euler(0,0,angle);
         }
+    }
+
+    private bool UsingMouse(){
+        if(Mouse.current.delta.ReadValue().sqrMagnitude > 0.1f){
+            return true;
+        }
+
+        return false;
     }
 
     void Shoot()
