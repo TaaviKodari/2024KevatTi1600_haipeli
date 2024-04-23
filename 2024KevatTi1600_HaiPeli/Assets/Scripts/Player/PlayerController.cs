@@ -23,6 +23,10 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    void Start(){
+        GameManager.Instance.playerController = this;
+    }
+
     private void OnEnable() {
         controls.Enable();    
     }

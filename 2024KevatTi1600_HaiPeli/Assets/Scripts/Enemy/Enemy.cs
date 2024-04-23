@@ -28,7 +28,17 @@ public class Enemy : MonoBehaviour
 
     void Move()
     {
+        if(playerTransform == null)
+        {
+            GetPlayer();
+            return;
+        }
         Vector2 direction = (playerTransform.position - transform.position).normalized;
         body.MovePosition(body.position + direction * currentSpeed * Time.fixedDeltaTime);
+    }
+
+    void GetPlayer()
+    {
+        playerTransform = GameManager.Instance.playerController.transform;
     }
 }
