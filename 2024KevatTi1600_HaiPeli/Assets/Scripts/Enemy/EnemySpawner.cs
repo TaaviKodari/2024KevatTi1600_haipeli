@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,9 +27,18 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
+        if(playerTransform == null)
+        {
+            playerTransform = GameManager.Instance.playerController.transform;
+            return;
+        }
+
+        Vector2 spawnPos = playerTransform.position;
+        spawnPos += Random.insideUnitCircle.normalized * spawnRadius;
+
         GameObject enemy = EnemyPoolManager.Instance.GetEnemy();
 
-        enemy.transform.position = transform.position;
+        enemy.transform.position = spawnPos;
 
         nextSpawnTime = Time.time + spawnInterval;
     }
